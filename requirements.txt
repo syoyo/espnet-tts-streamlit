@@ -3,3 +3,9 @@ streamlit
 # Install CPU version of pytorch
 --extra-index-url https://download.pytorch.org/whl/cpu
 torch
+
+soundfile
+espnet
+pyopenjtalk==0.2
+typeguard==2.13.3
+espnet_model_zoo
