@@ -26,7 +26,7 @@ init_session_state(st, "text2speech", None)
 init_session_state(st, "model_loaded", False)
 #init_session_state(st, "wavdata", None)
 
-st.title("ESPNet2 + TTS")
+st.title("ESPnet2 TTS")
 
 #lang = 'Japanese'
 #tag = 'kan-bayashi/jsut_full_band_vits_prosody'
@@ -61,7 +61,7 @@ st.header("Tsukuyomi-chan + JUST audio data terms-of-use info")
 st.markdown("https://tyc.rei-yumesaki.net/material/corpus/")
 st.markdown("https://sites.google.com/site/shinnosuketakamichi/publication/jsut/")
 
-agreed = st.checkbox("Agree the terms of use of Tukuyomi-chan + JUST audio data", value=False)
+agreed = st.checkbox("Agree the terms of use of Tukuyomi-chan copus + JUST copus dataset", value=False)
 
 tag = st.selectbox("Model", options=["kan-bayashi/tsukuyomi_full_band_vits_prosody"])
 

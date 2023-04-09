@@ -2,9 +2,11 @@
 
 import site
 import os
+import shutil
 from PyInstaller.utils.hooks import collect_data_files
 
 block_cipher = None
+
 
 # Choose path containing "site-packages"
 package_path = site.getsitepackages()[0]
@@ -14,6 +16,17 @@ for p in site.getsitepackages():
         package_path = p
         break
 
+# Overwrite librosa/__init__.py
+# https://github.com/librosa/librosa/issues/1682
+def librosa_postfix():
+    # Check file existence
+    if os.path.isfile(os.path.join(package_path, "librosa/__init__.py")):
+        shutil.copyfile("pre-fix/librosa/__init__.py", os.path.join(package_path, "librosa/__init__.py"))
+        print("Overwrite librosa/__init__.py")
+
+print("Trying to patch librosa/__init__.py ...")
+librosa_postfix()
+
 # streamlit files
 streamlit_datas=[(os.path.join(package_path, "altair/vegalite/v4/schema/vega-lite-schema.json"),
         "./altair/vegalite/v4/schema/"),
@@ -21,15 +34,12 @@ streamlit_datas=[(os.path.join(package_path, "altair/vegalite/v4/schema/vega-lit
        (os.path.join(package_path, "streamlit/runtime"),"./streamlit/runtime"),
        ]
 
-#    ("pages/*.py", "pages")
-
 # app files.
 app_datas = [
     ("espnet_tts_app_streamlit.py", "."),
     (os.path.join(package_path, "espnet/version.txt"), "./espnet"),
     (os.path.join(package_path, "jamo/data"), "./jamo/data"),
-    # librosa lazy init workaround
-    ("post-fix/librosa/__init__.pyi", "./librosa")
+    # ("post-fix/librosa/__init__.pyi", "./librosa")
 ]
 
 ## other asset files
@@ -41,8 +51,8 @@ a = Analysis(
     pathex=[],
     binaries=[],
     # copy streamlit files
-    datas=streamlit_datas+app_datas+asset_datas,
-    hiddenimports=[],
+    datas=streamlit_datas+app_datas+asset_datas+collect_data_files("librosa"),
+    hiddenimports=["librosa", "librosa.filters"],
     hookspath=["./hooks"],
     hooksconfig={},
     runtime_hooks=[],

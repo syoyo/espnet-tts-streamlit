@@ -9,3 +9,8 @@ espnet
 pyopenjtalk==0.2
 typeguard==2.13.3
 espnet_model_zoo
+
+# Use version < 3.7.0 as a workaround, otherwise pyinstallr fails to install some dlls
+# https://github.com/pyinstaller/pyinstaller/pull/7505
+# To visualize audio data
+matplotlib<3.7.0

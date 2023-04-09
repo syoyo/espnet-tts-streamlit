@@ -1,7 +1,10 @@
-# ESPNet2 + TTS GUI in Streamlit
+# ESPnet2 + TTS GUI using Streamlit
 
-A Streamlit GUI for ESPNet2 + TTS(Text-to-speech).
-Currently only Japanese is supported.
+A Streamlit GUI interface for ESPnet2 + TTS(Text-to-speech). 
+
+https://espnet.github.io/espnet/notebook/espnet2_tts_realtime_demo.html
+
+Currently only Japanese TTS is supported.
 
 # Requirements
 
@@ -37,9 +40,19 @@ Then
 $ pyinstaller espnet-tts-app.spec
 ```
 
+## Stop the app
+
+There is no easy way to quit/terminate Streamlit app...
+(Especially on Windows)
+
+https://discuss.streamlit.io/t/streamlit-server-1-5-1-from-command-line-hard-to-stop-with-ctrl-c/22277/2
+
+Please first do `ctrl-c` in Terminal window to terminate streamlit process, then close the browser window.
+
+
 ## License
 
-espnet-tts-streamlit source code is licensed under MIT license.
+`espnet-tts-streamlit` source code is licensed under MIT license.
 
 pretrained model and audio datasets have their own licenses and terms of use.
 
@@ -50,7 +63,11 @@ pretrained model and audio datasets have their own licenses and terms of use.
 - Other python packages/modules: See license of each Python packages/modules
   - Short summary: May contain package/module in GPL or GPL like licenses
 
-### Pretrained model and audio data licenses and terms of use
+### Pretrained model terms of use
 
-- https://tyc.rei-yumesaki.net/material/corpus/ 
-- https://sites.google.com/site/shinnosuketakamichi/publication/jsut/ 
+- `kan-bayashi/tsukuyomi_full_band_vits_prosody`
+  - `tsukuyomi_full_band_vits_prosody` model was trained using Tsukuyomi-chan copus and JUST copus(CC-BY-SA 4.0), thus you cannot use this pretrained model commercially. Use it for research purpose and personal use. DYOR.
+  - https://tyc.rei-yumesaki.net/material/corpus/ 
+  - https://sites.google.com/site/shinnosuketakamichi/publication/jsut/  (CC-BY-SA 4.0)
+
+EoL.
