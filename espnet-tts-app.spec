@@ -2,6 +2,7 @@
 
 import site
 import os
+from PyInstaller.utils.hooks import collect_data_files
 
 block_cipher = None
 
@@ -20,10 +21,15 @@ streamlit_datas=[(os.path.join(package_path, "altair/vegalite/v4/schema/vega-lit
        (os.path.join(package_path, "streamlit/runtime"),"./streamlit/runtime"),
        ]
 
+#    ("pages/*.py", "pages")
+
 # app files.
 app_datas = [
     ("espnet_tts_app_streamlit.py", "."),
-    ("pages/*.py", "pages")
+    (os.path.join(package_path, "espnet/version.txt"), "./espnet"),
+    (os.path.join(package_path, "jamo/data"), "./jamo/data"),
+    # librosa lazy init workaround
+    ("post-fix/librosa/__init__.pyi", "./librosa")
 ]
 
 ## other asset files
