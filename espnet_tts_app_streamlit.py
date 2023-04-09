@@ -114,3 +114,4 @@ if "wavdata" in st.session_state:
     
     st.pyplot(fig)
 
+st.warning("How to quit app? Please first ctrl-c(several times may be required) Streamlit process in terminal window, then close a browser window.")
