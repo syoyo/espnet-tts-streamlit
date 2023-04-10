@@ -2,6 +2,12 @@
 
 A Streamlit GUI interface for ESPnet2 + TTS(Text-to-speech). 
 
+
+https://user-images.githubusercontent.com/18676/230901038-f9351513-1d68-48ca-a6a0-e1a367e5a0eb.mp4
+
+
+Code is based on ESPnet2 TTS Colab demo
+
 https://espnet.github.io/espnet/notebook/espnet2_tts_realtime_demo.html
 
 Currently only Japanese TTS is supported.
