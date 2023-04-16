@@ -1,12 +1,32 @@
-import streamlit as st
-
+import io
 import time
+import base64
+import soundfile
+
+import numpy as np
+import streamlit as st
 import torch
 import soundfile as sf
 import matplotlib.pyplot as plt 
 
 from espnet2.bin.tts_inference import Text2Speech
 from espnet2.utils.types import str_or_none
+
+
+def st_autoplay_audio(st, audio_bytes, sample_rate):
+    """
+    audio_bytes : np.ndarray dtype fp32
+    """
+
+    buf = io.BytesIO()
+    soundfile.write(buf, audio_bytes, samplerate=sample_rate, format='WAV')
+
+    wavdata = buf.getvalue()
+    
+    # https://github.com/streamlit/streamlit/issues/2446#issuecomment-1465017176
+    audio_base64 = base64.b64encode(wavdata).decode('utf-8')
+    audio_tag = f'<audio autoplay="true" src="data:audio/wav;base64,{audio_base64}">'
+    st.markdown(audio_tag, unsafe_allow_html=True)
 
 def init_session_state(st, key, value):
     if key not in st.session_state:
@@ -85,7 +105,9 @@ if st.button("Load/Setup model", disabled=not agreed, help="This may take 20~30 
         if 'wavdata' in st.session_state:
             del st.session_state['wavdata']
 
-text = st.text_input("Text", value="吾輩は猫である。名前はまだない。")
+text = st.text_area("Text", value="吾輩は猫である。名前はまだない。", max_chars=2048)
+
+autoplay_onoff = st.checkbox("Auto play")
 
 model_not_loaded = st.session_state['text2speech'] is None
 
@@ -105,13 +127,17 @@ if "wavdata" in st.session_state:
     samplerate = st.session_state["text2speech"].fs
     st.audio(wavdata, sample_rate=samplerate)
 
-    fig = plt.figure()
-    ax1 = fig.add_subplot(2, 1, 1)
-    ax1.plot(wavdata)
+    if autoplay_onoff is True:
+        st_autoplay_audio(st, wavdata, samplerate)
 
-    ax2 = fig.add_subplot(2, 1, 2)
-    ax2.specgram(wavdata, Fs=samplerate)
-    
-    st.pyplot(fig)
+    with st.expander("Waveform visualization"):
+        fig = plt.figure()
+        ax1 = fig.add_subplot(2, 1, 1)
+        ax1.plot(wavdata)
+
+        ax2 = fig.add_subplot(2, 1, 2)
+        ax2.specgram(wavdata, Fs=samplerate)
+        
+        st.pyplot(fig)
 
 st.warning("How to quit app? Please first ctrl-c(several times may be required) Streamlit process in terminal window, then close a browser window.")
