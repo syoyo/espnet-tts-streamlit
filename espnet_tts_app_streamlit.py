@@ -105,7 +105,7 @@ if st.button("Load/Setup model", disabled=not agreed, help="This may take 20~30 
         if 'wavdata' in st.session_state:
             del st.session_state['wavdata']
 
-text = st.text_area("Text", value="吾輩は猫である。名前はまだない。", max_chars=2048)
+text = st.text_area("Text", value="吾輩は猫である。名前はまだない。", height=300, max_chars=2048)
 
 autoplay_onoff = st.checkbox("Auto play")
 
