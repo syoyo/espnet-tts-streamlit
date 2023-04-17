@@ -14,3 +14,6 @@ espnet_model_zoo
 # https://github.com/pyinstaller/pyinstaller/pull/7505
 # To visualize audio data
 matplotlib<3.7.0
+
+# Use faster_whisper
+faster-whisper
