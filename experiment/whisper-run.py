@@ -1,5 +1,6 @@
 import io
 import streamlit as st
+import torch
 
 import librosa
 
@@ -7,18 +8,26 @@ from faster_whisper import WhisperModel
 
 st.title("Whisper ASR UI")
 
-model_size = "large-v2"
-device="cpu"
 
-compute_type = "float16"
-if device == "cpu":
-    # Use fp32 since fp16 is not efficiently supported on most CPU architectures. 
-    compute_type = "float32"
+def load_model(model_size='large-v2', device='cpu', compute_type='float32'):
+    model = WhisperModel(model_size, device=device, compute_type=compute_type)
+    st.session_state['model'] = model
+
+devices = ['cpu']
+if torch.cuda.is_available():
+    devices.append('cuda')
+
+device = st.selectbox('Device', options=devices)
 
 if st.button("Load model."):
-    model = WhisperModel(model_size, device=device, compute_type=compute_type)
 
-    st.session_state['model'] = model
+    compute_type = "float16"
+    if device == "cpu":
+        # Use fp32 since fp16 is not efficiently supported on most CPU architectures. 
+        compute_type = "float32"
+
+    load_model(device=device, compute_type=compute_type)
+
 
 def do_transcribe(model, filename, beam_size=5):
 
@@ -36,8 +45,6 @@ uploaded_file = st.file_uploader("Upload audio file.")
 if uploaded_file is not None:
     bytes_data = uploaded_file.getvalue()
     buf = io.BytesIO(bytes_data)
-
-    #do_transcribe(buf)
 
     st.session_state['audio_file'] = buf
 
