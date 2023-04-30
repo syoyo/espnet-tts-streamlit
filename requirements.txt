@@ -6,9 +6,13 @@ torch
 
 soundfile
 espnet
-pyopenjtalk==0.2
-typeguard==2.13.3
 espnet_model_zoo
+
+# pyopenjtalk version must be 0.2
+pyopenjtalk-prebuilt==0.2.0
+
+# typeguard version must be 2.13.3(latest version python 3.8 is supported)
+typeguard==2.13.3
 
 # Use version < 3.7.0 as a workaround, otherwise pyinstallr fails to install some dlls
 # https://github.com/pyinstaller/pyinstaller/pull/7505

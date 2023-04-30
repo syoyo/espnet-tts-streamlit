@@ -12,13 +12,23 @@ https://espnet.github.io/espnet/notebook/espnet2_tts_realtime_demo.html
 
 Currently only Japanese TTS is supported.
 
+# Supported platform
+
+- [x] Windows 64bit
+- [x] Linux 64bit
+  - [x] x86_64
+  - [x] aarch64
+- [ ] macOS
+  - Not tested well, but should work.
+
 # Requirements
 
 - Python 3.8(Python 3.10+ did not work due to `typeguard` version used in ESPNet2))
 - PyTorch
   - We use CPU version for portability
-- C/C++ Build environment
-  - `pyopenjtalk` requires to build from a source.
+- Optional
+  - C/C++ build environment
+  - We use pyopenjtalk-prebuilt, but may require compiling pyopenjtalk from source for minior environment.
 
 ## Install
 
